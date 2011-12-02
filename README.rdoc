@@ -1,12 +1,10 @@
-= Vexflow JSON
+= VexFlow JSON
 
 NOTE: This library is in progress and not useable yet. This notice will be removed when something is stable.
 
-This library allows musical notation specified in JSON, for rendering with the awesome VexFlow staff engraving library (HTML5 Canvas or SVG). The goal of this project is to make 90% staff engraving significantly easier than interacting with the VexFlow API directly.
+This library allows musical notation specified in JSON, for rendering with the awesome VexFlow staff engraving library (HTML5 Canvas or SVG). The goal of this project is to make 90% of staff engraving significantly easier than interacting with the VexFlow API directly. Specifying the data in JSON also allows a consistent representation of the staff to be passed around from server to client.
 
 == Examples:
-
-Let's start with the most simple, and work up to the more complex examples.
 
 === Chord
 
@@ -18,7 +16,11 @@ Although vexflow-json will automatically choose an appropriate octave in treble 
   
   ["Bb/4", "D/4", "F/4", "A/5"]
 
-A more explicit way to render this, showing all possibilities for overriding defaults, is:
+Need to specify the duration? Wrap it around an object and set your notes to the "keys" hash value:
+
+  { duration: "h", keys: ["Bb", "D", "F", "A"] }
+
+The fully-explicit way to render this is to put this inside of another object and assign it to "notes", allowing for other top-level options to be specified:
 
   {
     clef: "treble",   // Could also be: clefs: ["treble", "bass"]
@@ -40,7 +42,7 @@ Here are three chords comprising a ii-V-I:
 
 As with above, any of these string key values can override the octave (chosen intelligently by default based on position in the array).
 
-A more explicit way to render this, showing all possibilities for overriding defaults, is:
+Here's the fully-explicit way to render this, showing all possibilities for overriding defaults:
 
   {
     clef: "treble",   // Could also be an array: ["treble", "bass"]
@@ -53,7 +55,7 @@ A more explicit way to render this, showing all possibilities for overriding def
 
 === Voices
 
-It's also possible to specify voices, which imply a time signature and must be mathematically complete:
+It's also possible to abstract notes further and specify full voices, which imply a time signature and must be mathematically complete:
 
   {
     voices: [
@@ -61,10 +63,10 @@ It's also possible to specify voices, which imply a time signature and must be m
         { duration: "q", keys: ["E/5"] },
         { duration: "h", keys: ["D/5"] },
         { duration: "q", keys: ["C/5", "E/5", "G/5"] }
-      ] },
+      ]},
       { time: "4/4", notes: [
         { duratin: "w", keys: ["C/4"] }
-      ] }
+      ]}
     ]
   }
 
@@ -79,9 +81,11 @@ TODO
 Here are all the options on the top-level objects to explicitly plot any sequence of notes:
 
   {
+    renderer: "canvas",  // Or "svg"
     clef: ["treble", "bass"],
     height: 180,
     width: 300,   // This must be wide enough to encompass all notes or an exception will be raised!
-    notes: []   // Array of notes, rendered sequentially outside of time signature (voice)
+    notes: [],   // Array of notes, rendered sequentially outside of time signature (voice)
+    voices: []   // Array of voices, supercedes "notes" if specified
   }
 
