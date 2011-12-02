@@ -65,7 +65,7 @@ It's also possible to abstract notes further and specify full voices, which impl
         { duration: "q", keys: ["C/5", "E/5", "G/5"] }
       ]},
       { time: "4/4", notes: [
-        { duratin: "w", keys: ["C/4"] }
+        { duration: "w", keys: ["C/4"] }
       ]}
     ]
   }
