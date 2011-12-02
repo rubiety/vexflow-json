@@ -1,0 +1,87 @@
+= Vexflow JSON
+
+NOTE: This library is in progress and not useable yet. This notice will be removed when something is stable.
+
+This library allows musical notation specified in JSON, for rendering with the awesome VexFlow staff engraving library (HTML5 Canvas or SVG). The goal of this project is to make 90% staff engraving significantly easier than interacting with the VexFlow API directly.
+
+== Examples:
+
+Let's start with the most simple, and work up to the more complex examples.
+
+=== Chord
+
+Without anything special, a simple array of pitch values is interpreted as notes in a single chord, rendered by default as a whole note:
+
+  ["Bb", "D", "F", "A"]
+
+Although vexflow-json will automatically choose an appropriate octave in treble clef if no octave is specified, you can override this:
+  
+  ["Bb/4", "D/4", "F/4", "A/5"]
+
+A more explicit way to render this, showing all possibilities for overriding defaults, is:
+
+  {
+    clef: "treble",   // Could also be: clefs: ["treble", "bass"]
+    notes: [
+      { duration: "h", keys: ["Bb/4", "D/4", "F/4", "A/5"] }
+    ]
+  }
+
+=== Sequence of Chords
+
+Without anything special, an array of arrays is interpreted as a sequence of chords, rendered by default as quarter notes. 
+Here are three chords comprising a ii-V-I:
+
+  [
+    ["C", "Eb", "G", "Bb"],
+    ["C", "Eb", "F", "A"],
+    ["Bb", "D", "F', "A"]
+  ]
+
+As with above, any of these string key values can override the octave (chosen intelligently by default based on position in the array).
+
+A more explicit way to render this, showing all possibilities for overriding defaults, is:
+
+  {
+    clef: "treble",   // Could also be an array: ["treble", "bass"]
+    notes: [
+      { duration: "q", keys: ["C", "Eb", "G", "Bb"] },
+      { duration: "q", keys: ["C", "Eb", "F", "A"] },
+      { duration: "h", keys: ["Bb", "D", "F', "A"] }
+    ]
+  }
+
+=== Voices
+
+It's also possible to specify voices, which imply a time signature and must be mathematically complete:
+
+  {
+    voices: [
+      { time: "4/4", notes: [
+        { duration: "q", keys: ["E/5"] },
+        { duration: "h", keys: ["D/5"] },
+        { duration: "q", keys: ["C/5", "E/5", "G/5"] }
+      ] },
+      { time: "4/4", notes: [
+        { duratin: "w", keys: ["C/4"] }
+      ] }
+    ]
+  }
+
+=== Beaming
+
+VexFlow can beam contiguous notes for you.
+
+TODO
+
+=== Top-Level Object
+
+Here are all the options on the top-level objects to explicitly plot any sequence of notes:
+
+  {
+    clef: ["treble", "bass"],
+    height: 180,
+    width: 300,   // This must be wide enough to encompass all notes or an exception will be raised!
+    notes: []   // Array of notes, rendered sequentially outside of time signature (voice)
+  }
+
