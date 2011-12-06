@@ -71,8 +71,6 @@ class Vex.Flow.JSON
       stave_note
     
   render: (element)->
-    console.log @notes
-
     this.draw_canvas element
     this.draw_stave "treble"
     this.draw_notes this.stave_notes()
