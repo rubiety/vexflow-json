@@ -28,20 +28,17 @@
       this.clef = this.data.clef;
       this.notes = this.interpret_notes(this.data.notes);
     }
+
+    this.width = this.data.width || 600;
+    this.height = this.data.height || 110;
   };
 
   Vex.Flow.JSON.prototype.interpret_notes = function(data) {
     return _(data).map(function(datum) {
       if (typeof datum === "string") {
-        return {
-          duration: "q",
-          keys: this.interpret_keys([datum])
-        };
+        return { duration: "q", keys: this.interpret_keys([datum]) };
       } else if (datum instanceof Array) {
-        return {
-          duration: "q",
-          keys: this.interpret_keys(datum)
-        };
+        return { duration: "q", keys: this.interpret_keys(datum) };
       } else {
         datum.keys = this.interpret_keys(datum.keys);
         datum.duration || (datum.duration = "q");
@@ -59,22 +56,17 @@
     });
   };
 
-  Vex.Flow.JSON.prototype.draw_canvas = function(canvas, options) {
+  Vex.Flow.JSON.prototype.draw_canvas = function(canvas) {
     this.canvas = canvas;
-    if (options == null) {
-      options = {};
-    }
-    this.canvas_width = options["width"] || 600;
-    this.canvas_height = options["height"] || 110;
     this.renderer = new Vex.Flow.Renderer(this.canvas, Vex.Flow.Renderer.Backends.CANVAS);
-    return this.context = this.renderer.getContext();
+    this.context = this.renderer.getContext();
   };
 
   Vex.Flow.JSON.prototype.draw_stave = function(clef, options) {
     if (clef == null) clef = "treble";
     if (options == null) options = {};
 
-    this.staves[clef] = new Vex.Flow.Stave(10, this.stave_offset, this.canvas_width - 20);
+    this.staves[clef] = new Vex.Flow.Stave(10, this.stave_offset, this.width - 20);
     this.staves[clef].addClef(clef).setContext(this.context).draw();
     this.stave_offset += this.stave_delta;
   };
@@ -89,12 +81,14 @@
       note.duration || (note.duration = "h");
       note.clef || (note.clef = "treble");
       stave_note = new Vex.Flow.StaveNote(note);
+
       _(note.keys).each(function(key, i) {
         var accidental, note_portion;
         note_portion = key.split("/")[0];
         accidental = note_portion.slice(1, (note_portion.length + 1) || 9e9);
+
         if (accidental.length > 0) {
-          return stave_note.addAccidental(i, new Vex.Flow.Accidental(accidental));
+          stave_note.addAccidental(i, new Vex.Flow.Accidental(accidental));
         }
       });
       return stave_note;
@@ -108,3 +102,4 @@
   };
 
 }).call(this);
+
