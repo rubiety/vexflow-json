@@ -1,0 +1,78 @@
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>VexFlow JSON Examples</title>
+
+<script src="vendor/underscore.js" type="text/javascript"></script>
+<script src="vendor/vexflow.js" type="text/javascript"></script>
+<script src="vexflow.json.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+
+  function render_vexflow(element_id, data) {
+    var element = document.getElementById(element_id);
+    var json = new Vex.Flow.JSON(data);
+    json.render(element);
+  }
+
+</script>
+
+</head>
+
+<body>
+
+  <h1>Simple Chord</h1>
+  <canvas id="simple-chord" width="600" height="200"></canvas>
+  <script type="text/javascript">
+    render_vexflow("simple-chord", ["C", "E", "G", "Bb"]);
+  </script>
+
+  <h1>Simple Chord with Octaves</h1>
+  <canvas id="simple-chord-with-octaves" width="600" height="200"></canvas>
+  <script type="text/javascript">
+    render_vexflow("simple-chord-with-octaves", ["C/5", "E/5", "G/5", "Bb/5"]);
+  </script>
+  
+  <h1>Simple Chord with Duration</h1>
+  <canvas id="simple-chord-with-duration" width="600" height="200"></canvas>
+  <script type="text/javascript">
+    render_vexflow("simple-chord-with-duration", {
+      duration: "h",
+      keys: ["C", "E", "G", "Bb"]
+    });
+  </script>
+
+  <h1>Simple Sequence of Chords</h1>
+  <canvas id="simple-sequence-of-chords" width="600" height="200"></canvas>
+  <script type="text/javascript">
+    render_vexflow("simple-sequence-of-chords", [
+      ["C", "Eb", "G", "Bb"],
+      ["C", "Eb", "F", "A"],
+      ["Bb", "D", "F", "A"]
+    ]);
+  </script>
+
+  <h1>Explicit Sequence of Chords</h1>
+  <canvas id="explicit-sequence-of-chords" width="600" height="200"></canvas>
+  <script type="text/javascript">
+    render_vexflow("explicit-sequence-of-chords", {
+      clef: "treble",
+      notes: [
+        { duration: "q", keys: ["C", "Eb", "G", "Bb"] },
+        { duration: "q", keys: ["C", "Eb", "F", "A"] },
+        { duration: "h", keys: ["Bb", "D", "F", "A"] }
+      ]
+    });
+  </script>
+
+  <h1>Explicit Voices</h1>
+  <h2>TODO</h2>
+
+
+  <h1>Explicit Voices with Beaming</h1>
+  <h2>TODO</h2>
+
+</body>
+
+</html>
+

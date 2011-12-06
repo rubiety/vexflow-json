@@ -1,8 +1,11 @@
 = VexFlow JSON
 
-NOTE: This library is in progress and not useable yet. This notice will be removed when something is stable.
-
 This library allows musical notation specified in JSON, for rendering with the awesome VexFlow staff engraving library (HTML5 Canvas or SVG). The goal of this project is to make 90% of staff engraving significantly easier than interacting with the VexFlow API directly. Specifying the data in JSON also allows a consistent representation of the staff to be passed around from server to client.
+
+== Dependencies:
+
+* VexFlow
+* Underscore.js (Will be removed as a dependency before long)
 
 == Examples:
 
@@ -37,7 +40,7 @@ Here are three chords comprising a ii-V-I:
   [
     ["C", "Eb", "G", "Bb"],
     ["C", "Eb", "F", "A"],
-    ["Bb", "D", "F', "A"]
+    ["Bb", "D", "F", "A"]
   ]
 
 As with above, any of these string key values can override the octave (chosen intelligently by default based on position in the array).
@@ -49,11 +52,13 @@ Here's the fully-explicit way to render this, showing all possibilities for over
     notes: [
       { duration: "q", keys: ["C", "Eb", "G", "Bb"] },
       { duration: "q", keys: ["C", "Eb", "F", "A"] },
-      { duration: "h", keys: ["Bb", "D", "F', "A"] }
+      { duration: "h", keys: ["Bb", "D", "F", "A"] }
     ]
   }
 
 === Voices
+
+TODO: This feature is in progress and not useable yet!
 
 It's also possible to abstract notes further and specify full voices, which imply a time signature and must be mathematically complete:
 
