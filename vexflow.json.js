@@ -28,9 +28,6 @@
       this.clef = this.data.clef;
       this.notes = this.interpret_notes(this.data.notes);
     }
-
-    this.width = this.data.width || 600;
-    this.height = this.data.height || 110;
   };
 
   Vex.Flow.JSON.prototype.interpret_notes = function(data) {
@@ -95,7 +92,11 @@
     });
   };
 
-  Vex.Flow.JSON.prototype.render = function(element) {
+  Vex.Flow.JSON.prototype.render = function(element, options) {
+    options = (options || {});
+    this.width = options.width || element.width || 600;
+    this.height = options.height || element.height || 120;
+    
     this.draw_canvas(element);
     this.draw_stave("treble");
     this.draw_notes(this.stave_notes());

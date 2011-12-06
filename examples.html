@@ -9,10 +9,10 @@
 
 <script type="text/javascript">
 
-  function render_vexflow(element_id, data) {
+  function render_vexflow(element_id, data, render_options) {
     var element = document.getElementById(element_id);
     var json = new Vex.Flow.JSON(data);
-    json.render(element);
+    json.render(element, render_options);
   }
 
 </script>
@@ -23,7 +23,7 @@
   <h1>VexFlow JSON Examples</h1>
 
   <h2>Simple Chord</h2>
-  <canvas id="simple-chord" width="600" height="120"></canvas>
+  <canvas id="simple-chord" width="200" height="120"></canvas>
   <script type="text/javascript">
     render_vexflow("simple-chord", ["C", "E", "G", "Bb"]);
   </script>
@@ -31,7 +31,7 @@
   <h2>Simple Chord with Octaves</h2>
   <canvas id="simple-chord-with-octaves" width="600" height="120"></canvas>
   <script type="text/javascript">
-    render_vexflow("simple-chord-with-octaves", ["C/5", "E/5", "G/5", "Bb/5"]);
+    render_vexflow("simple-chord-with-octaves", ["C/5", "E/5", "G/5", "Bb/5"], { width: 200 });
   </script>
   
   <h2>Simple Chord with Duration</h2>

@@ -7,6 +7,23 @@ This library allows musical notation specified in JSON, for rendering with the a
 * VexFlow
 * Underscore.js (Will be removed as a dependency before long)
 
+== Usage:
+  
+Simply define a canvas, initialize a new Vex.Flow.JSON object with the JSON data, and render it:
+
+  <canvas id="staff" width="600" height="150"></canvas>
+
+  var canvas = document.getElementById("staff");
+  var json = new Vex.Flow.JSON(["C", "E", "G"]);
+  json.render(canvas);
+
+Note that the render method accepts a second argument with render options, if you want to override the width and height used for example:
+
+  json.render(canvas, {
+    width: 200,
+    height: 120
+  });
+
 == Examples:
 
 === Chord
