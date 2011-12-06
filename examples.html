@@ -20,21 +20,22 @@
 </head>
 
 <body>
+  <h1>VexFlow JSON Examples</h1>
 
-  <h1>Simple Chord</h1>
-  <canvas id="simple-chord" width="600" height="200"></canvas>
+  <h2>Simple Chord</h2>
+  <canvas id="simple-chord" width="600" height="120"></canvas>
   <script type="text/javascript">
     render_vexflow("simple-chord", ["C", "E", "G", "Bb"]);
   </script>
 
-  <h1>Simple Chord with Octaves</h1>
-  <canvas id="simple-chord-with-octaves" width="600" height="200"></canvas>
+  <h2>Simple Chord with Octaves</h2>
+  <canvas id="simple-chord-with-octaves" width="600" height="120"></canvas>
   <script type="text/javascript">
     render_vexflow("simple-chord-with-octaves", ["C/5", "E/5", "G/5", "Bb/5"]);
   </script>
   
-  <h1>Simple Chord with Duration</h1>
-  <canvas id="simple-chord-with-duration" width="600" height="200"></canvas>
+  <h2>Simple Chord with Duration</h2>
+  <canvas id="simple-chord-with-duration" width="600" height="120"></canvas>
   <script type="text/javascript">
     render_vexflow("simple-chord-with-duration", {
       duration: "h",
@@ -42,8 +43,14 @@
     });
   </script>
 
-  <h1>Simple Sequence of Chords</h1>
-  <canvas id="simple-sequence-of-chords" width="600" height="200"></canvas>
+  <h2>Simple List of Notes</h2>
+  <canvas id="simple-list-of-notes" width="600" height="120"></canvas>
+  <script type="text/javascript">
+    render_vexflow("simple-list-of-notes", [["C"], ["D"], ["E"], ["F"], ["G"]]);
+  </script>
+
+  <h2>Simple Sequence of Chords</h2>
+  <canvas id="simple-sequence-of-chords" width="600" height="120"></canvas>
   <script type="text/javascript">
     render_vexflow("simple-sequence-of-chords", [
       ["C", "Eb", "G", "Bb"],
@@ -52,8 +59,8 @@
     ]);
   </script>
 
-  <h1>Explicit Sequence of Chords</h1>
-  <canvas id="explicit-sequence-of-chords" width="600" height="200"></canvas>
+  <h2>Explicit Sequence of Chords</h2>
+  <canvas id="explicit-sequence-of-chords" width="600" height="120"></canvas>
   <script type="text/javascript">
     render_vexflow("explicit-sequence-of-chords", {
       clef: "treble",
@@ -65,11 +72,11 @@
     });
   </script>
 
-  <h1>Explicit Voices</h1>
+  <h2>Explicit Voices</h2>
   <h2>TODO</h2>
 
 
-  <h1>Explicit Voices with Beaming</h1>
+  <h2>Explicit Voices with Beaming</h2>
   <h2>TODO</h2>
 
 </body>

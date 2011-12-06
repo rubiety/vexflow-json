@@ -32,10 +32,14 @@ The fully-explicit way to render this is to put this inside of another object an
     ]
   }
 
-=== Sequence of Chords
+=== Sequence of Notes/Chords
 
-Without anything special, an array of arrays is interpreted as a sequence of chords, rendered by default as quarter notes. 
-Here are three chords comprising a ii-V-I:
+
+Without anything special, an array of arrays is interpreted as a sequence of notes, rendered by default as quarter notes. 
+
+  [["C", "D", "E", "F", "G", "A", "B"]]
+
+You can expand this out with multiple notes to make a sequence of chords. Here are three chords comprising a ii-V-I:
 
   [
     ["C", "Eb", "G", "Bb"],
