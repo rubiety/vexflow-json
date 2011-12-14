@@ -115,3 +115,5 @@ Here are all the options on the top-level objects to explicitly plot any sequenc
     voices: []   // Array of voices, supercedes "notes" if specified
   }
 
+NOTE: Even though you can specify both treble and bass clef at once, for now all notes are rendered "within" treble clef and stemmed as such.
+

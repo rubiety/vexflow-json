@@ -7,7 +7,7 @@
   Vex.Flow.JSON = function(data) {
     this.data = data;
     this.stave_offset = 0;
-    this.stave_delta = 80;
+    this.stave_delta = 60;
     this.staves = {};
     this.interpret_data();
   }
@@ -22,10 +22,10 @@
         this.notes = this.interpret_notes([ { keys: this.data } ]);
       }
     } else if (this.data.keys) {
-      this.clef = "treble";
+      this.clef = this.data.clef || "treble";
       this.notes = this.interpret_notes([this.data]);
     } else {
-      this.clef = this.data.clef;
+      this.clef = this.data.clef || "treble";
       this.notes = this.interpret_notes(this.data.notes);
     }
   };
@@ -61,22 +61,25 @@
 
   Vex.Flow.JSON.prototype.draw_stave = function(clef, options) {
     if (clef == null) clef = "treble";
+    if (!(clef instanceof Array)) clef = [clef];
     if (options == null) options = {};
 
-    this.staves[clef] = new Vex.Flow.Stave(10, this.stave_offset, this.width - 20);
-    this.staves[clef].addClef(clef).setContext(this.context).draw();
-    this.stave_offset += this.stave_delta;
+    _(clef).each(function(c) {
+      this.staves[c] = new Vex.Flow.Stave(10, this.stave_offset, this.width - 20);
+      this.staves[c].addClef(c).setContext(this.context).draw();
+      this.stave_offset += this.stave_delta;
+    }, this);
   };
 
   Vex.Flow.JSON.prototype.draw_notes = function(notes) {
-    Vex.Flow.Formatter.FormatAndDraw(this.context, this.staves[this.clef], notes);
+    Vex.Flow.Formatter.FormatAndDraw(this.context, this.staves["treble"], notes);
   };
 
   Vex.Flow.JSON.prototype.stave_notes = function() {
     return _(this.notes).map(function(note) {
       var stave_note;
       note.duration || (note.duration = "h");
-      note.clef || (note.clef = "treble");
+      note.clef = "treble"; // Was: note.clef || (note.clef = "treble");
       stave_note = new Vex.Flow.StaveNote(note);
 
       _(note.keys).each(function(key, i) {
@@ -96,9 +99,9 @@
     options = (options || {});
     this.width = options.width || element.width || 600;
     this.height = options.height || element.height || 120;
-    
+
     this.draw_canvas(element);
-    this.draw_stave("treble");
+    this.draw_stave(this.clef);
     this.draw_notes(this.stave_notes());
   };
 
