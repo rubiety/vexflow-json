@@ -15,17 +15,13 @@
   Vex.Flow.JSON.prototype.interpret_data = function() {
     if (this.data instanceof Array) {
       if (this.data[0] instanceof Array) {
-        this.clef = "treble";
         this.notes = this.interpret_notes(this.data);
       } else if (typeof this.data[0] === "string") {
-        this.clef = "treble";
         this.notes = this.interpret_notes([ { keys: this.data } ]);
       }
     } else if (this.data.keys) {
-      this.clef = this.data.clef || "treble";
       this.notes = this.interpret_notes([this.data]);
     } else {
-      this.clef = this.data.clef || "treble";
       this.notes = this.interpret_notes(this.data.notes);
     }
   };
@@ -79,7 +75,7 @@
     return _(this.notes).map(function(note) {
       var stave_note;
       note.duration || (note.duration = "h");
-      note.clef = "treble"; // Was: note.clef || (note.clef = "treble");
+      note.clef = "treble"; // Forcing to treble for now, even though bass may be present (we just line it up properly)
       stave_note = new Vex.Flow.StaveNote(note);
 
       _(note.keys).each(function(key, i) {
@@ -99,6 +95,7 @@
     options = (options || {});
     this.width = options.width || element.width || 600;
     this.height = options.height || element.height || 120;
+    this.clef = options.clef;
 
     this.draw_canvas(element);
     this.draw_stave(this.clef);

@@ -21,7 +21,8 @@ Note that the render method accepts a second argument with render options, if yo
 
   json.render(canvas, {
     width: 200,
-    height: 120
+    height: 180,
+    clef: ["treble", "bass"]  // Defaults to just "treble"
   });
 
 == Examples:
@@ -43,7 +44,6 @@ Need to specify the duration? Wrap it around an object and set your notes to the
 The fully-explicit way to render this is to put this inside of another object and assign it to "notes", allowing for other top-level options to be specified:
 
   {
-    clef: "treble",   // Could also be: clefs: ["treble", "bass"]
     notes: [
       { duration: "h", keys: ["Bb/4", "D/4", "F/4", "A/5"] }
     ]
@@ -66,10 +66,9 @@ You can expand this out with multiple notes to make a sequence of chords. Here a
 
 As with above, any of these string key values can override the octave (chosen intelligently by default based on position in the array).
 
-Here's the fully-explicit way to render this, showing all possibilities for overriding defaults:
+Here's the fully-explicit way to render this:
 
   {
-    clef: "treble",   // Could also be an array: ["treble", "bass"]
     notes: [
       { duration: "q", keys: ["C", "Eb", "G", "Bb"] },
       { duration: "q", keys: ["C", "Eb", "F", "A"] },
@@ -115,5 +114,14 @@ Here are all the options on the top-level objects to explicitly plot any sequenc
     voices: []   // Array of voices, supercedes "notes" if specified
   }
 
-NOTE: Even though you can specify both treble and bass clef at once, for now all notes are rendered "within" treble clef and stemmed as such.
+=== Render Options Object
 
+Here are all optional keys to the second "render options" object:
+
+  {
+    width: 200,
+    height: 180,
+    clef: "treble"  // or: ["treble", "bass"]
+  }
+
+NOTE: Even though you can specify both treble and bass clef at once, for now all notes are rendered "within" treble clef and stemmed as such.
