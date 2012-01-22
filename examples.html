@@ -55,6 +55,10 @@
     render_vexflow("simple-sequence-of-chords", [
       ["C", "Eb", "G", "Bb"],
       ["C", "Eb", "F", "A"],
+      ["Bb", "D", "F", "A"],
+      "|",
+      ["C", "Eb", "G", "Bb"],
+      ["C", "Eb", "F", "A"],
       ["Bb", "D", "F", "A"]
     ]);
   </script>
@@ -67,7 +71,8 @@
       notes: [
         { duration: "q", keys: ["C", "Eb", "G", "Bb"] },
         { duration: "q", keys: ["C", "Eb", "F", "A"] },
-        { duration: "h", keys: ["Bb", "D", "F", "A"] }
+        { duration: "h", keys: ["Bb", "D", "F", "A"] },
+        { duration: "h", keys: ["Bb", "D", "F", "A"] },
       ]
     });
   </script>
@@ -83,7 +88,30 @@
   </script>
 
   <h2>Explicit Voices</h2>
-  <h2>TODO</h2>
+  <canvas id="explicit-voices" width="900" height="300"></canvas>
+  <script type="text/javascript">
+    render_vexflow("explicit-voices", {
+      clef: "treble",
+      voices: [
+        { time: "4/4", notes: [
+          { duration: "h", keys: ["C", "Eb", "F", "A"] },
+          { duration: "h", keys: ["Bb", "D", "F", "A"] },
+          { barnote: true },
+          { duration: "q", keys: ["C", "Eb", "G", "Bb"] },
+          { duration: "q", keys: ["C", "Eb", "F", "A"] },
+          { duration: "h", keys: ["Bb", "D", "F", "A"] },
+          { barnote: true },
+          { duration: "q", keys: ["C", "Eb", "G", "Bb"] },
+          { duration: "q", keys: ["C", "Eb", "F", "A"] },
+          { duration: "h", keys: ["Bb", "D", "F", "A"] },
+          { barnote: true },
+          { duration: "q", keys: ["C", "Eb", "G", "Bb"] },
+          { duration: "q", keys: ["C", "Eb", "F", "A"] },
+          { duration: "h", keys: ["Bb", "D", "F", "A"] }
+        ]}
+      ]
+    });
+  </script>
 
 
   <h2>Explicit Voices with Beaming</h2>

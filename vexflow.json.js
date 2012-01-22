@@ -21,21 +21,37 @@
       }
     } else if (this.data.keys) {
       this.notes = this.interpret_notes([this.data]);
-    } else {
+    } else if (this.data.notes) {
       this.notes = this.interpret_notes(this.data.notes);
+    } else if (this.data.voices) {
+      this.voices = this.interpret_voices(this.data.voices);
     }
   };
 
   Vex.Flow.JSON.prototype.interpret_notes = function(data) {
     return _(data).map(function(datum) {
       if (typeof datum === "string") {
-        return { duration: "q", keys: this.interpret_keys([datum]) };
+        if (datum == "|") { return { barnote: true} }
+        else {
+          return { duration: "q", keys: this.interpret_keys([datum]) };
+        }
       } else if (datum instanceof Array) {
         return { duration: "q", keys: this.interpret_keys(datum) };
       } else {
-        datum.keys = this.interpret_keys(datum.keys);
-        datum.duration || (datum.duration = "q");
+        if (datum.keys) {
+          datum.keys = this.interpret_keys(datum.keys);
+          datum.duration || (datum.duration = "q");
+        }
         return datum;
+      }
+    }, this);
+  };
+  
+  Vex.Flow.JSON.prototype.interpret_voices = function(data) {
+    return _(data).map(function(datum) {
+      return {
+        time: datum.time,
+        notes: this.interpret_notes(datum.notes)
       }
     }, this);
   };
@@ -67,12 +83,10 @@
     }, this);
   };
 
-  Vex.Flow.JSON.prototype.draw_notes = function(notes) {
-    Vex.Flow.Formatter.FormatAndDraw(this.context, this.staves["treble"], notes);
-  };
-
-  Vex.Flow.JSON.prototype.stave_notes = function() {
-    return _(this.notes).map(function(note) {
+  Vex.Flow.JSON.prototype.stave_notes = function(notes) {
+    return _(notes).map(function(note) {
+      if (note.barnote) { return new Vex.Flow.BarNote(); }
+      
       var stave_note;
       note.duration || (note.duration = "h");
       note.clef = "treble"; // Forcing to treble for now, even though bass may be present (we just line it up properly)
@@ -90,6 +104,33 @@
       return stave_note;
     });
   };
+  
+  Vex.Flow.JSON.prototype.draw_notes = function(notes) {
+    console.log("DRAWING NOTES");
+    Vex.Flow.Formatter.FormatAndDraw(this.context, this.staves["treble"], notes);
+  };
+  
+  Vex.Flow.JSON.prototype.stave_voices = function(voices) {
+    return _(this.voices).map(function(voice) {
+      var stave_voice = new Vex.Flow.Voice({
+        num_beats: voice.time.split("/")[0],
+        beat_value: voice.time.split("/")[1],
+        resolution: Vex.Flow.RESOLUTION
+      });
+      
+      stave_voice.setStrict(false);
+      stave_voice.addTickables(this.stave_notes(voice.notes));
+      return stave_voice;
+    }, this);
+  };
+  
+  Vex.Flow.JSON.prototype.draw_voices = function(voices) {
+    console.log("DRAWING VOICES");
+    var formatter = new Vex.Flow.Formatter().joinVoices(voices).format(voices, this.width - 120);
+    _(voices).each(function(voice) {
+      voice.draw(this.context, this.staves["treble"]);
+    }, this);
+  };
 
   Vex.Flow.JSON.prototype.render = function(element, options) {
     options = (options || {});
@@ -99,7 +140,12 @@
 
     this.draw_canvas(element);
     this.draw_stave(this.clef);
-    this.draw_notes(this.stave_notes());
+    
+    if (this.voices) {
+      this.draw_voices(this.stave_voices(this.voices));
+    } else {
+      this.draw_notes(this.stave_notes(this.notes));
+    }
   };
 
 }).call(this);

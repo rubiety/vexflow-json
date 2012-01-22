@@ -76,9 +76,30 @@ Here's the fully-explicit way to render this:
     ]
   }
 
-=== Voices
+=== Bars
 
-TODO: This feature is in progress and not useable yet!
+Within an array of notes, you can create a new bar line by simply including the string "|", for example:
+
+[
+  ["C", "Eb", "G", "Bb"],
+  ["C", "Eb", "F", "A"],
+  "|"
+  ["Bb", "D", "F", "A"]
+]
+
+Or if using the more explicit object notation, just include an object { barnote: true }:
+
+{
+  notes: [
+    { duration: "q", keys: ["C", "Eb", "G", "Bb"] },
+    { duration: "q", keys: ["C", "Eb", "F", "A"] },
+    { barnote: true },
+    { duration: "h", keys: ["Bb", "D", "F", "A"] }
+  ]
+}
+
+
+=== Voices
 
 It's also possible to abstract notes further and specify full voices, which imply a time signature and must be mathematically complete:
 
