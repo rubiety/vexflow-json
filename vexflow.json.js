@@ -65,10 +65,16 @@
     });
   };
 
-  Vex.Flow.JSON.prototype.draw_canvas = function(canvas) {
+  Vex.Flow.JSON.prototype.draw_canvas = function(canvas, canvas_options) {
+    canvas_options = canvas_options || {};
+    
     this.canvas = canvas;
     this.renderer = new Vex.Flow.Renderer(this.canvas, Vex.Flow.Renderer.Backends.CANVAS);
     this.context = this.renderer.getContext();
+    
+    if (canvas_options.scale) {
+      this.context.scale(canvas_options.scale, canvas_options.scale);
+    }
   };
 
   Vex.Flow.JSON.prototype.draw_stave = function(clef, options) {
@@ -106,7 +112,6 @@
   };
   
   Vex.Flow.JSON.prototype.draw_notes = function(notes) {
-    console.log("DRAWING NOTES");
     Vex.Flow.Formatter.FormatAndDraw(this.context, this.staves["treble"], notes);
   };
   
@@ -125,7 +130,6 @@
   };
   
   Vex.Flow.JSON.prototype.draw_voices = function(voices) {
-    console.log("DRAWING VOICES");
     var formatter = new Vex.Flow.Formatter().joinVoices(voices).format(voices, this.width - 120);
     _(voices).each(function(voice) {
       voice.draw(this.context, this.staves["treble"]);
@@ -137,8 +141,12 @@
     this.width = options.width || element.width || 600;
     this.height = options.height || element.height || 120;
     this.clef = options.clef;
+    this.scale = options.scale || 1;
 
-    this.draw_canvas(element);
+    this.draw_canvas(element, {
+      scale: this.scale
+    });
+    
     this.draw_stave(this.clef);
     
     if (this.voices) {

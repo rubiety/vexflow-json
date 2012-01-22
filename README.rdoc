@@ -142,6 +142,7 @@ Here are all optional keys to the second "render options" object:
   {
     width: 200,
     height: 180,
+    scale: 1,  // Scales entire renderer up or down (default 1 - no scaling)
     clef: "treble"  // or: ["treble", "bass"]
   }
 
