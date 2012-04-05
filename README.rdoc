@@ -80,23 +80,23 @@ Here's the fully-explicit way to render this:
 
 Within an array of notes, you can create a new bar line by simply including the string "|", for example:
 
-[
-  ["C", "Eb", "G", "Bb"],
-  ["C", "Eb", "F", "A"],
-  "|"
-  ["Bb", "D", "F", "A"]
-]
+  [
+    ["C", "Eb", "G", "Bb"],
+    ["C", "Eb", "F", "A"],
+    "|"
+    ["Bb", "D", "F", "A"]
+  ]
 
 Or if using the more explicit object notation, just include an object { barnote: true }:
 
-{
-  notes: [
-    { duration: "q", keys: ["C", "Eb", "G", "Bb"] },
-    { duration: "q", keys: ["C", "Eb", "F", "A"] },
-    { barnote: true },
-    { duration: "h", keys: ["Bb", "D", "F", "A"] }
-  ]
-}
+  {
+    notes: [
+      { duration: "q", keys: ["C", "Eb", "G", "Bb"] },
+      { duration: "q", keys: ["C", "Eb", "F", "A"] },
+      { barnote: true },
+      { duration: "h", keys: ["Bb", "D", "F", "A"] }
+    ]
+  }
 
 
 === Voices
