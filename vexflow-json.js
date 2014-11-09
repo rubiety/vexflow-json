@@ -77,14 +77,14 @@
     }
   };
 
-  Vex.Flow.JSON.prototype.draw_stave = function(clef, options) {
+  Vex.Flow.JSON.prototype.draw_stave = function(clef, keySignature, options) {
     if (clef == null) clef = "treble";
     if (!(clef instanceof Array)) clef = [clef];
     if (options == null) options = {};
 
     _(clef).each(function(c) {
       this.staves[c] = new Vex.Flow.Stave(10, this.stave_offset, this.width - 20);
-      this.staves[c].addClef(c).setContext(this.context).draw();
+      this.staves[c].addClef(c).addKeySignature(keySignature).setContext(this.context).draw();
       this.stave_offset += this.stave_delta;
     }, this);
   };
@@ -142,12 +142,13 @@
     this.height = options.height || element.height || 120;
     this.clef = options.clef;
     this.scale = options.scale || 1;
+    this.keySignature = options.keySignature || 'C';
 
     this.draw_canvas(element, {
       scale: this.scale
     });
     
-    this.draw_stave(this.clef);
+    this.draw_stave(this.clef, this.keySignature);
     
     if (this.voices) {
       this.draw_voices(this.stave_voices(this.voices));
@@ -157,4 +158,3 @@
   };
 
 }).call(this);
-
