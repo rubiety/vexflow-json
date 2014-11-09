@@ -24,7 +24,8 @@ Note that the render method accepts a second argument with render options, if yo
   json.render(canvas, {
     width: 200,
     height: 180,
-    clef: ["treble", "bass"]  // Defaults to just "treble"
+    clef: ["treble", "bass"],  // Defaults to just "treble"
+    keySignature: "C" // Defaults to "C"
   });
 
 == Examples:
