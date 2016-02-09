@@ -69,7 +69,11 @@
     canvas_options = canvas_options || {};
     
     this.canvas = canvas;
-    this.renderer = new Vex.Flow.Renderer(this.canvas, Vex.Flow.Renderer.Backends.CANVAS);
+    var backend = Vex.Flow.Renderer.Backends.CANVAS;
+    if (canvas.tagName.toLowerCase() === "svg") {
+      backend = Vex.Flow.Renderer.Backends.SVG;
+    }
+    this.renderer = new Vex.Flow.Renderer(this.canvas, backend);
     this.context = this.renderer.getContext();
     
     if (canvas_options.scale) {
@@ -138,8 +142,8 @@
 
   Vex.Flow.JSON.prototype.render = function(element, options) {
     options = (options || {});
-    this.width = options.width || element.width || 600;
-    this.height = options.height || element.height || 120;
+    this.width = options.width || (element.width|0) || 600; // coerce weird SVG values to ints
+    this.height = options.height || (element.height|0) || 120;
     this.clef = options.clef;
     this.scale = options.scale || 1;
     this.keySignature = options.keySignature || 'C';
